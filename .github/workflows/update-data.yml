@@ -24,7 +24,7 @@ jobs:
         env:
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SHEET_GID: ${{ secrets.SHEET_GID }}
-        run: node scripts/build-data.mjs
+        run: node build-data.mjs
       - name: Commit if changed
         run: |
           if git diff --quiet -- data.json; then echo "Nothing to commit."; exit 0; fi
