@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>European Election Window</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Color+Emoji&display=swap">
+<style>
+/* Layout: one ledger column, months as bands, a "today" rule splitting past from upcoming */
+:root{
+  --bg:#f8f8f6; --surface:#ffffff; --ink:#0f1d3a; --muted:#56607a; --faint:#a2a8b6; --line:#e3e3df;
+  --accent:#003399; --brand:#0f1d3a; --gold:#ffcc00; --today:#e0312b;
+  --c-hos:#5b3a9e; --c-nat:#003399; --c-reg:#00857a; --c-loc:#c47a00; --c-ref:#d14b6a; --c-eu:#b89100;
+  --warn-bg:#fbe7e5; --warn-fg:#9a2219; --eu-bg:#fff3bf; --eu-fg:#5c4a00;
+  --f-display:"Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+  --f-body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --f-flag:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1529; --surface:#131e36; --ink:#e9edf5; --muted:#9ea8bf; --faint:#5e6a86; --line:#243152;
+  --accent:#7fa3ff; --brand:#e9edf5; --gold:#ffcc00; --today:#ff6a5e;
+  --c-hos:#a88bec; --c-nat:#6f99ff; --c-reg:#3cc2b1; --c-loc:#f0ac3c; --c-ref:#f07f98; --c-eu:#ffd633;
+  --warn-bg:#3c1a1a; --warn-fg:#ffb0a6; --eu-bg:#3a3312; --eu-fg:#ffe27a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1529; --surface:#131e36; --ink:#e9edf5; --muted:#9ea8bf; --faint:#5e6a86; --line:#243152;
+  --accent:#7fa3ff; --brand:#e9edf5; --gold:#ffcc00; --today:#ff6a5e;
+  --c-hos:#a88bec; --c-nat:#6f99ff; --c-reg:#3cc2b1; --c-loc:#f0ac3c; --c-ref:#f07f98; --c-eu:#ffd633;
+  --warn-bg:#3c1a1a; --warn-fg:#ffb0a6; --eu-bg:#3a3312; --eu-fg:#ffe27a; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+header{display:grid;gap:14px;margin-bottom:22px}
+h1{color:var(--brand);padding-bottom:8px;border-bottom:4px solid var(--gold);justify-self:start;font-family:var(--f-display);font-weight:700;font-size:clamp(1.7rem,4vw,2.4rem);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.range{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.range b{color:var(--ink);font-weight:500}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px 5px 9px;font:500 .82rem var(--f-body);cursor:pointer}
+.chip i{width:10px;height:10px;border-radius:3px;background:var(--k)}
+.chip .n{font-family:var(--f-mono);color:var(--muted);font-size:.75rem}
+.chip[aria-pressed="false"]{opacity:.45}
+.chip[aria-pressed="false"] i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--k)}
+.chip:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#q{flex:1 1 200px;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 11px;font:inherit;font-size:.9rem}
+label.tog{display:inline-flex;gap:6px;align-items:center;font-size:.82rem;color:var(--muted);cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.78rem;color:var(--muted)}
+.legend{align-items:center}
+.tf{display:inline-flex;gap:6px;align-items:center;background:none;border:1px solid transparent;border-radius:7px;padding:3px 6px 3px 3px;font:inherit;color:inherit;cursor:pointer}
+.tf:hover{border-color:var(--line)}
+.tf .st{font:600 .62rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;border-radius:3px;padding:1px 4px;display:none}
+.tf[data-s="only"]{border-color:var(--accent);background:var(--surface)}
+.tf[data-s="only"] .st{display:inline;background:var(--accent);color:var(--surface)}
+.tf[data-s="hide"]{border-color:var(--line);opacity:.6}
+.tf[data-s="hide"] .st{display:inline;border:1px solid var(--faint);color:var(--muted)}
+.tf[data-s="hide"] .tag,.tf[data-s="hide"] sup{text-decoration:line-through}
+.tf .n{font-family:var(--f-mono);color:var(--faint);font-size:.72rem}
+.tf:focus-visible,.tag[data-t]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tag[data-t]{cursor:pointer}
+.hint{font-size:.74rem;color:var(--faint)}
+.month{margin-top:26px}
+.month h2{color:var(--brand);font-family:var(--f-display);font-weight:500;font-size:1.15rem;margin:0 0 8px;display:flex;align-items:baseline;gap:10px}
+.month h2 small{font-family:var(--f-mono);font-size:.72rem;color:var(--faint);font-weight:400}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ev{display:grid;grid-template-columns:52px 4px minmax(0,1fr);gap:0 14px;padding:11px 14px 11px 10px;border-top:1px solid var(--line)}
+.ev:first-child{border-top:0}
+.ev.past{color:var(--muted)}
+.ev.past .bar{opacity:.45}
+.ev.past .flag{filter:grayscale(.6);opacity:.75}
+.date{font-family:var(--f-mono);text-align:right;line-height:1.1;padding-top:2px}
+.date .d{font-size:1.15rem;font-weight:500;font-variant-numeric:tabular-nums}
+.date .w{font-size:.68rem;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+.date.same{visibility:hidden}
+.bar{border-radius:2px;background:var(--k)}
+.body{display:grid;gap:3px;min-width:0}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px}
+.flag{font-family:var(--f-flag);font-size:1.05rem;line-height:1;position:relative;top:1px}
+.flag.code{font:600 .62rem var(--f-mono);border:1px solid var(--line);border-radius:3px;padding:1px 3px;top:-1px}
+.country{font-weight:600}
+.type{color:var(--k);font-weight:500;font-size:.9rem}
+.ev.past .type{color:var(--muted)}
+.tag{font:500 .66rem var(--f-mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 5px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.nf{background:var(--warn-bg);color:var(--warn-fg);border-color:transparent}
+.tag.eu{background:var(--eu-bg);color:var(--eu-fg);border-color:transparent}
+.specs{font-size:.86rem;color:var(--muted)}
+.specs details summary{cursor:pointer;color:var(--accent);font-size:.8rem;list-style:none;display:inline}
+.specs details summary::-webkit-details-marker{display:none}
+.parts{display:flex;flex-wrap:wrap;gap:2px 16px;font-family:var(--f-mono);font-size:.76rem;color:var(--muted)}
+.parts .p.done{text-decoration:line-through;text-decoration-color:var(--faint)}
+sup.tbc{font:600 .6rem var(--f-mono);color:var(--today);margin-left:2px;letter-spacing:.03em}
+.today{display:flex;align-items:center;gap:10px;margin:26px 0 -10px;color:var(--today);font:500 .78rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em}
+.today::after{content:"";flex:1;height:2px;background:var(--today);border-radius:1px}
+.pastbox{margin-top:6px}
+.pastbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font:500 .9rem var(--f-body)}
+.pastbox>summary::-webkit-details-marker{display:none}
+.pastbox>summary:hover{border-color:var(--faint);color:var(--ink)}
+.pastbox>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pastbox .n{font-family:var(--f-mono);font-size:.75rem;color:var(--faint);margin-left:auto}
+.chev{width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.pastbox[open]>summary .chev{transform:rotate(45deg)}
+.pastbox[open]>summary{border-style:solid}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+footer{margin-top:34px;font-size:.78rem;color:var(--faint)}
+@media (max-width:520px){.ev{grid-template-columns:40px 4px minmax(0,1fr);gap:0 10px}.date .d{font-size:1rem}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <h1>European Election Window</h1>
+    <div class="range" id="range"></div>
+    <div class="controls" id="chips"></div>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Filter by country or region…" aria-label="Filter by country or region">
+    </div>
+    <div class="legend" id="tags"></div>
+  </header>
+  <main id="out"></main>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+let DATA = [];
+let sourceNote = "";
+const FLAG = {"Albania":"AL","Andorra":"AD","Armenia":"AM","Austria":"AT","Azerbaijan":"AZ","Belarus":"BY","Belgium":"BE","Bosnia and Herzegovina":"BA","Bulgaria":"BG","Croatia":"HR","Cyprus":"CY","Czechia":"CZ","Denmark":"DK","Estonia":"EE","European Union":"EU","Faroe Islands":"FO","Finland":"FI","France":"FR","Georgia":"GE","Germany":"DE","Gibraltar":"GI","Greece":"GR","Greenland":"GL","Guernsey":"GG","Holy See":"VA","Hungary":"HU","Iceland":"IS","Ireland":"IE","Isle of Man":"IM","Italy":"IT","Jersey":"JE","Kosovo":"XK","Latvia":"LV","Liechtenstein":"LI","Lithuania":"LT","Luxembourg":"LU","Malta":"MT","Moldova":"MD","Monaco":"MC","Montenegro":"ME","Netherlands":"NL","North Macedonia":"MK","Norway":"NO","Poland":"PL","Portugal":"PT","Romania":"RO","Russian Federation":"RU","San Marino":"SM","Serbia":"RS","Slovakia":"SK","Slovenia":"SI","Spain":"ES","Svalbard":"SJ","Sweden":"SE","Switzerland":"CH","Türkiye":"TR","United Kingdom":"GB","Åland Islands":"AX"};
+const CATS = [
+  {id:"hos", name:"Head of state", k:"--c-hos"},
+  {id:"nat", name:"National parliament", k:"--c-nat"},
+  {id:"reg", name:"Regional", k:"--c-reg"},
+  {id:"loc", name:"Local", k:"--c-loc"},
+  {id:"ref", name:"Referendum", k:"--c-ref"},
+  {id:"eu",  name:"European Parliament", k:"--c-eu"}
+];
+function cat(t){
+  if(t.startsWith("head of state")) return "hos";
+  if(t.startsWith("national parliament")) return "nat";
+  if(t.startsWith("local")) return "loc";
+  if(t==="national referendum") return "ref";
+  if(t==="European Parliament") return "eu";
+  return "reg";
+}
+function typeLabel(t){
+  const map = {
+    "head of state/presidential":"President / head of state",
+    "head of state/presidential by-election":"President / head of state",
+    "head of region/presidential":"Head of region",
+    "local (nationwide)":"Local, nationwide",
+    "local (not nationwide but including the capital)":"Local, incl. capital",
+    "national referendum":"Referendum",
+    "regional government":"Regional government",
+    "regional government by-election":"Regional government",
+    "regional parliament (unicameral)":"Regional parliament",
+    "single vote regional parliament and president":"Regional parliament + president",
+    "dependent territory parliament (unicameral)":"Territory parliament",
+    "European Parliament":"European Parliament"
+  };
+  if(map[t]) return map[t];
+  return t.replace(" by-election","").replace("national parliament","National parliament")
+          .replace(" (unicameral)","").replace(/ \((lower|upper) house\)/," · $1 house");
+}
+const MS=86400000;
+const flagEmoji = c => [...c].map(ch=>String.fromCodePoint(0x1F1E6+ch.charCodeAt(0)-65)).join("");
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pd = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const fmt = (d,o) => d.toLocaleDateString("en-GB",o);
+
+function prepare(list){
+ list.forEach(e=>{
+  e.cat=cat(e.t); e.by=/by-election/.test(e.t);
+  e.p.forEach(p=>{p.s=pd(p.d); p.en=p.e?pd(p.e):p.s;});
+  e.hay=(e.c+" "+(e.s||[]).map(x=>x.n).join(" ")+" "+typeLabel(e.t)).toLowerCase();
+ });
+ return list;
+}
+
+const TAGS=[
+  {id:"eu", html:'<span class="tag eu">EUCO</span>', label:"affects European Council", has:e=>!!e.u},
+  {id:"nf", html:'<span class="tag nf">Not free/fair</span>', label:"", has:e=>!!e.f},
+  {id:"in", html:'<span class="tag">Indirect</span>', label:"chosen by a body, not voters", has:e=>!!e.i},
+  {id:"by", html:'<span class="tag">By-election</span>', label:"", has:e=>e.by},
+  {id:"tbc",html:'<sup class="tbc">tbc</sup>', label:"date not confirmed", has:e=>e.p.some(p=>p.ok===0)||(e.s||[]).some(z=>z.ok===0)}
+];
+const state={off:new Set(),q:"",hidepast:false,tags:{}};
+try{const s=JSON.parse(localStorage.getItem("ew-prefs")||"{}");state.off=new Set(s.off||[]);state.hidepast=!!s.hidepast;state.tags=s.tags||{};}catch(_){}
+const save=()=>{try{localStorage.setItem("ew-prefs",JSON.stringify({off:[...state.off],hidepast:state.hidepast,tags:state.tags}))}catch(_){}};
+const tagOk=e=>TAGS.every(g=>{const s=state.tags[g.id]; if(!s) return true; return s==="only"?g.has(e):!g.has(e);});
+function cycleTag(id){ const s=state.tags[id]; if(!s) state.tags[id]="only"; else if(s==="only") state.tags[id]="hide"; else delete state.tags[id]; save(); render(); }
+
+function windowNow(){
+  const t=new Date(); t.setHours(0,0,0,0);
+  const a=new Date(t); a.setMonth(a.getMonth()-6);
+  const b=new Date(t); b.setMonth(b.getMonth()+12);
+  return {t,a,b};
+}
+
+function render(){
+  const {t,a,b}=windowNow();
+  document.getElementById("range").innerHTML=
+    `Showing <b>${fmt(a,{day:"numeric",month:"short",year:"numeric"})}</b> → <b>${fmt(b,{day:"numeric",month:"short",year:"numeric"})}</b> · today ${fmt(t,{weekday:"short",day:"numeric",month:"short"})}`;
+
+  // events in window, anchored to first in-window date
+  let inWin=[];
+  DATA.forEach(e=>{
+    const hit=e.p.find(p=>p.en>=a && p.s<=b);
+    if(!hit) return;
+    const anchor = hit.s<a ? a : hit.s;
+    const past = e.p.every(p=>p.en<t);
+    inWin.push({e,anchor,past});
+  });
+
+  // chips with counts (before category filter)
+  const counts={}; inWin.forEach(x=>counts[x.e.cat]=(counts[x.e.cat]||0)+1);
+  const chips=document.getElementById("chips");
+  chips.innerHTML=CATS.filter(c=>counts[c.id]).map(c=>
+    `<button class="chip" data-c="${c.id}" aria-pressed="${!state.off.has(c.id)}" style="--k:var(${c.k})"><i></i>${c.name}<span class="n">${counts[c.id]}</span></button>`).join("");
+
+  const tc={}; inWin.forEach(x=>TAGS.forEach(g=>{if(g.has(x.e)) tc[g.id]=(tc[g.id]||0)+1;}));
+  document.getElementById("tags").innerHTML=TAGS.map(g=>{const s=state.tags[g.id]||"";
+    return `<button class="tf" data-t="${g.id}" data-s="${s}" title="Click: show only → hide → all"><span class="st">${s==="only"?"Only":s==="hide"?"Hidden":""}</span>${g.html}${g.label?" "+g.label:""}<span class="n">${tc[g.id]||0}</span></button>`;}).join("")
+    + `<span class="hint">Click a tag: only → hide → all</span>`;
+  const q=state.q.trim().toLowerCase();
+  let list=inWin.filter(x=>!state.off.has(x.e.cat) && (!q||x.e.hay.includes(q)) && tagOk(x.e));
+  const order={hos:0,nat:1,eu:2,ref:3,reg:4,loc:5};
+  list.sort((x,y)=>x.anchor-y.anchor || order[x.e.cat]-order[y.e.cat] || x.e.c.localeCompare(y.e.c));
+
+  const todayLine=`<div class="today">Today · ${fmt(t,{day:"numeric",month:"long"})}</div>`;
+  const before=list.filter(x=>x.anchor<t), after=list.filter(x=>x.anchor>=t);
+  const out=[];
+  if(before.length){
+    out.push(`<details class="pastbox" id="pastbox"${pastOpen?" open":""}><summary><span class="chev" aria-hidden="true"></span>Past six months<span class="n">${before.length} ${before.length===1?"event":"events"}</span></summary>${months(before,t)}</details>`);
+  }
+  if(list.length) out.push(todayLine);
+  if(after.length) out.push(months(after,t));
+  if(!list.length) out.push(`<div class="list"><div class="empty">No elections match these filters.</div></div>`);
+  document.getElementById("out").innerHTML=out.join("");
+  document.getElementById("foot").textContent=`${list.length} of ${inWin.length} events shown. The window moves with today's date each time the page opens. Rounds, voting days and same-day regional contests are merged into one row. ${sourceNote}`;
+}
+
+let pastOpen=false;
+function months(arr,t){
+  const out=[]; let curM=null,lastDay=null,open=false;
+  for(const x of arr){
+    const mk=x.anchor.getFullYear()*12+x.anchor.getMonth();
+    if(mk!==curM){
+      if(open) out.push("</div></section>");
+      curM=mk; lastDay=null; open=true;
+      const n=arr.filter(y=>y.anchor.getFullYear()*12+y.anchor.getMonth()===mk).length;
+      out.push(`<section class="month"><h2>${fmt(x.anchor,{month:"long",year:"numeric"})}<small>${n} ${n===1?"event":"events"}</small></h2><div class="list">`);
+    }
+    const dk=+x.anchor; out.push(row(x,dk===lastDay,t)); lastDay=dk;
+  }
+  if(open) out.push("</div></section>");
+  return out.join("");
+}
+function row(x,same,t){
+  const e=x.e, c=CATS.find(c=>c.id===e.cat);
+  const code=FLAG[e.c];
+  const flag = code && code!=="XK" ? `<span class="flag" aria-hidden="true">${flagEmoji(code)}</span>` : `<span class="flag code" aria-hidden="true">${code||"··"}</span>`;
+  const tags=[];
+  if(e.by) tags.push(`<span class="tag" data-t="by" role="button" tabindex="0">By-election</span>`);
+  if(e.i) tags.push(`<span class="tag" data-t="in" role="button" tabindex="0">Indirect</span>`);
+  if(e.u) tags.push(`<span class="tag eu" data-t="eu" role="button" tabindex="0">EUCO</span>`);
+  if(e.f) tags.push(`<span class="tag nf" data-t="nf" role="button" tabindex="0">Not free/fair</span>`);
+  const allTbc = e.p.every(p=>p.ok===0);
+  let specs="";
+  if(e.s){
+    const s=e.s.map(z=>esc(z.n)+(z.ok===0&&!allTbc?'<sup class="tbc">tbc</sup>':""));
+    const lab = e.s.length>3 ? `${e.s.length} ${e.cat==="ref"?"questions":"contests"}: ` : "";
+    if(s.length>6) specs=`<div class="specs">${lab}${s.slice(0,5).join(", ")} <details style="display:inline"><summary>+${s.length-5} more</summary> ${s.slice(5).join(", ")}</details></div>`;
+    else specs=`<div class="specs">${lab}${s.join(e.cat==="ref"?" · ":", ")}</div>`;
+  }
+  const showParts = e.p.length>1 || e.p[0].l || e.p[0].e;
+  const parts = showParts ? `<div class="parts">${e.p.map(p=>{
+      const ds = p.e ? `${fmt(p.s,{day:"numeric"})}–${fmt(p.en,{day:"numeric",month:"short"})}` : fmt(p.s,{day:"numeric",month:"short",year: p.s.getFullYear()!==t.getFullYear()?"numeric":undefined});
+      return `<span class="p${p.en<t?" done":""}">${p.l?esc(p.l)+" ":""}${ds}${p.ok===0?'<sup class="tbc">tbc</sup>':""}</span>`;}).join("")}</div>` : "";
+  const d=x.anchor;
+  return `<article class="ev${x.past?" past":""}" style="--k:var(${c.k})">
+    <div class="date${same?" same":""}"><div class="d">${d.getDate()}${allTbc&&!showParts?'<sup class="tbc">tbc</sup>':""}</div><div class="w">${fmt(d,{weekday:"short"})}</div></div>
+    <div class="bar"></div>
+    <div class="body">
+      <div class="head">${flag}<span class="country">${esc(e.c)}</span><span class="type">${esc(typeLabel(e.t))}</span>${tags.join("")}</div>
+      ${specs}${parts}
+    </div></article>`;
+}
+
+document.getElementById("chips").addEventListener("click",ev=>{
+  const b=ev.target.closest(".chip"); if(!b) return;
+  const id=b.dataset.c; state.off.has(id)?state.off.delete(id):state.off.add(id); save(); render();
+});
+document.getElementById("q").addEventListener("input",ev=>{state.q=ev.target.value; render();});
+document.getElementById("tags").addEventListener("click",ev=>{const b=ev.target.closest(".tf"); if(b) cycleTag(b.dataset.t);});
+document.getElementById("out").addEventListener("toggle",ev=>{ if(ev.target.id==="pastbox") pastOpen=ev.target.open; },true);
+document.getElementById("out").addEventListener("click",ev=>{const b=ev.target.closest(".tag[data-t]"); if(b) cycleTag(b.dataset.t);});
+document.getElementById("out").addEventListener("keydown",ev=>{const b=ev.target.closest(".tag[data-t]"); if(b&&(ev.key==="Enter"||ev.key===" ")){ev.preventDefault(); cycleTag(b.dataset.t);}});
+
+// keep current: re-render after midnight and when the tab comes back
+let lastKey=new Date().toDateString();
+function tick(){ const k=new Date().toDateString(); if(k!==lastKey){lastKey=k; render();} }
+setInterval(tick,60000);
+
+let lastLoad=0;
+async function load(){
+  try{
+    const r=await fetch("data.json?_="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw new Error(r.status);
+    const j=await r.json();
+    DATA=prepare(j.events); lastLoad=Date.now();
+    const u=new Date(j.updated);
+    sourceNote=`Data refreshed ${u.toLocaleDateString("en-GB",{day:"numeric",month:"short"})} at ${u.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}.`;
+  }catch(err){
+    sourceNote="The election data could not be loaded. Try reloading the page.";
+  }
+  render();
+}
+document.addEventListener("visibilitychange",()=>{ if(document.hidden) return; tick(); if(Date.now()-lastLoad>30*60000) load(); });
+load();
+</script>
+
+</body>
+</html>
