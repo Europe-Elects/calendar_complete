@@ -22,7 +22,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg)}
 body{color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.4;font-variant-numeric:tabular-nums}
-.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
 
 /* header: navy bar with gold rule, filters in a white card below */
 header{margin-bottom:6px}
@@ -30,7 +30,8 @@ header{margin-bottom:6px}
 h1{margin:0;color:#fff;font-weight:700;font-size:clamp(1.25rem,3vw,1.6rem);letter-spacing:.08em;text-transform:uppercase;line-height:1.15;text-wrap:balance}
 .range{font-size:.95rem;color:rgba(255,255,255,.75)}
 .range b{color:var(--gold);font-weight:700}
-.filters{background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;padding:14px 18px;display:grid;gap:12px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px}
+.filters{padding:14px 18px;display:grid;gap:12px;align-content:start}
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .chip{display:inline-flex;align-items:center;gap:7px;min-height:36px;border:1px solid #D5D3CC;background:var(--surface);color:var(--ink);border-radius:999px;padding:0 13px 0 11px;font:600 .95rem var(--f);cursor:pointer}
 .chip i{width:10px;height:10px;border-radius:50%;background:var(--k)}
@@ -104,10 +105,11 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 .scope{margin:0;font-size:.98rem;color:var(--muted);line-height:1.45}
 .scope a{color:var(--link);font-weight:700;white-space:nowrap}
 /* map */
-.mapcard{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 18px 14px}
-.maphead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;padding:11px 0 8px;border-bottom:2px solid var(--gold);margin-bottom:8px}
-.maphead h2{margin:0;color:var(--navy);font-size:1.1rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-.maphint{font-size:.9rem;color:var(--faint)}
+.mapcard{border-left:1px solid var(--line);padding:10px 16px 12px;min-width:0}
+.maphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:6px;border-bottom:2px solid var(--gold);margin-bottom:6px}
+.maphead h2{margin:0;color:var(--navy);font-size:1rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.maptoggle{display:none;border:1px solid #D5D3CC;background:#fff;border-radius:999px;padding:4px 12px;font:700 .9rem var(--f);color:var(--navy);cursor:pointer}
+.maphint{margin:4px 0 0;font-size:.85rem;color:var(--faint)}
 .mapwrap{position:relative;min-height:120px}
 .mapwrap svg{display:block;width:100%;height:auto}
 .mapwrap .ct{stroke:#fff;stroke-width:.6;transition:opacity .15s}
@@ -120,7 +122,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 .maptip b{display:block;font-size:1.02rem;margin-bottom:3px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.2)}
 .maptip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
 .maptip .more{opacity:.7;font-size:.85rem}
-.maplegend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.9rem;color:var(--muted);margin-top:6px}
+.maplegend{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:.85rem;color:var(--muted);margin-top:4px}
 .maplegend span{display:inline-flex;align-items:center;gap:6px}
 .maplegend i{width:10px;height:10px;border-radius:2px;display:inline-block}
 .maplegend .clear{margin-left:auto;border:0;background:none;color:var(--link);font:700 .9rem var(--f);cursor:pointer;padding:0}
@@ -142,6 +144,13 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 .credits b{color:var(--navy)}
 .credits a{color:var(--link);font-weight:700}
 @media (max-width:760px){.ngrid{grid-template-columns:1fr}}
+@media (max-width:860px){
+  .hgrid{grid-template-columns:1fr}
+  .mapcard{border-left:0;border-top:1px solid var(--line)}
+  .maptoggle{display:inline-block}
+  .mapcard:not(.open) .mapbody{display:none}
+  .mapcard:not(.open) .maphead{border-bottom:0;margin-bottom:0;padding-bottom:0}
+}
 /* data access strip + form (same as the home page) */
 .ds{margin-top:22px;padding:14px 18px;background:var(--navy);color:#fff;border-radius:6px;border-bottom:2px solid var(--gold)}
 .ds-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
@@ -180,6 +189,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
       <h1>Electoral Calendar</h1>
       <div class="range" id="range"></div>
     </div>
+    <div class="hgrid">
     <div class="filters">
       <p class="scope">European Parliament, national parliament and presidential elections in European states and territories, including by-elections; all regional elections; and local elections held nationwide or in the capital. <a href="#notes" id="notes-link">Why some elections aren't listed</a></p>
       <div class="controls" id="chips"></div>
@@ -188,12 +198,16 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
       </div>
       <div class="legend" id="tags"></div>
     </div>
+    <section class="mapcard" id="mapcard" aria-label="Map of upcoming elections">
+      <div class="maphead"><h2>Next 12 months</h2><button type="button" class="maptoggle" id="maptoggle" aria-expanded="false">Show map</button></div>
+      <div class="mapbody" id="mapbody">
+        <div class="mapwrap" id="mapwrap"><div class="maptip" id="maptip" hidden></div></div>
+        <div class="maplegend" id="maplegend"></div>
+        <p class="maphint">Colour = next election · click a country to filter the list</p>
+      </div>
+    </section>
+    </div>
   </header>
-  <section class="mapcard" id="mapcard" aria-label="Map of upcoming elections">
-    <div class="maphead"><h2>Next twelve months</h2><span class="maphint" id="maphint">Colour = next election in each country · click a country to show only its elections</span></div>
-    <div class="mapwrap" id="mapwrap"><div class="maptip" id="maptip" hidden></div></div>
-    <div class="maplegend" id="maplegend"></div>
-  </section>
   <main id="out"></main>
   <footer id="foot"></footer>
 
@@ -488,8 +502,10 @@ async function initMap(){
       const m=topojson.mergeArcs(world,[to,piece]); to.type=m.type; to.arcs=m.arcs; };
     move("643","804",[34.1,45.3]); move(null,"196",[33.6,35.25],"N. Cyprus");
     const feats=topojson.feature(world,{type:"GeometryCollection",geometries:geos.filter(g=>g.type)}).features;
-    const W=960,H=640;
-    const frame={type:"MultiPoint",coordinates:[[-24,35],[42,35],[-12,70],[38,70],[10,34]]};
+    const W=960,H=700;
+    // Frame: mainland Europe from Portugal to the Black Sea, Crete to North Cape, plus Iceland (sampled edges, because parallels curve).
+    const edge=[]; for(let lon=-10;lon<=36;lon+=2){ edge.push([lon,34.8],[lon,lon<5?60:70.5]); } for(let lat=35;lat<=60;lat+=5) edge.push([-10,lat]);
+    const frame={type:"MultiPoint",coordinates:edge.concat([[-24.5,63.3],[-24.5,66.6],[-13.5,66.6],[-13.5,63.3]])};
     const proj=d3.geoConicConformal().rotate([-12,0]).parallels([40,62]).fitExtent([[6,6],[W-6,H-6]],frame);
     const path=d3.geoPath(proj);
     const wrap=document.getElementById("mapwrap");
@@ -531,6 +547,7 @@ function mapUpdate(items){
     +(M.sel?`<button type="button" class="clear" id="mapclear">Show all countries ✕</button>`:"");
   const cl=document.getElementById("mapclear"); if(cl) cl.onclick=()=>{ M.sel=null; state.q=""; document.getElementById("q").value=""; render(); };
 }
+document.getElementById("maptoggle").addEventListener("click",e=>{ const c=document.getElementById("mapcard"), o=c.classList.toggle("open"); e.currentTarget.setAttribute("aria-expanded",o); e.currentTarget.textContent=o?"Hide map":"Show map"; });
 document.getElementById("notes-link").addEventListener("click",e=>{ e.preventDefault(); const d=document.getElementById("notes-box"); d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); });
 initMap();
 
