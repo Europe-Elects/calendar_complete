@@ -100,6 +100,74 @@ sup.tbc{font:700 .66rem var(--f);color:var(--today);margin-left:2px;letter-spaci
 @media (prefers-reduced-motion:reduce){.chev{transition:none}}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-size:.9rem;color:var(--faint)}
+/* scope line */
+.scope{margin:0;font-size:.98rem;color:var(--muted);line-height:1.45}
+.scope a{color:var(--link);font-weight:700;white-space:nowrap}
+/* map */
+.mapcard{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 18px 14px}
+.maphead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;padding:11px 0 8px;border-bottom:2px solid var(--gold);margin-bottom:8px}
+.maphead h2{margin:0;color:var(--navy);font-size:1.1rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.maphint{font-size:.9rem;color:var(--faint)}
+.mapwrap{position:relative;min-height:120px}
+.mapwrap svg{display:block;width:100%;height:auto}
+.mapwrap .ct{stroke:#fff;stroke-width:.6;transition:opacity .15s}
+.mapwrap .ct.on{cursor:pointer}
+.mapwrap .ct.on:hover,.mapwrap .dot.on:hover{opacity:.8}
+.mapwrap .ct.sel,.mapwrap .dot.sel{stroke:var(--navy);stroke-width:1.8}
+.mapwrap .dot{stroke:#fff;stroke-width:1.2}
+.mapwrap .dot.on{cursor:pointer}
+.maptip{position:absolute;z-index:5;pointer-events:none;background:var(--navy);color:#fff;border-radius:6px;padding:9px 12px;font-size:.92rem;line-height:1.45;min-width:200px;max-width:280px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.maptip b{display:block;font-size:1.02rem;margin-bottom:3px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.2)}
+.maptip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.maptip .more{opacity:.7;font-size:.85rem}
+.maplegend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.9rem;color:var(--muted);margin-top:6px}
+.maplegend span{display:inline-flex;align-items:center;gap:6px}
+.maplegend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.maplegend .clear{margin-left:auto;border:0;background:none;color:var(--link);font:700 .9rem var(--f);cursor:pointer;padding:0}
+/* notes + credits */
+.notes{margin-top:22px}
+.notes details>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;color:var(--navy);font:700 1rem var(--f);letter-spacing:.04em}
+.notes details>summary::-webkit-details-marker{display:none}
+.notes details>summary:hover,.notes details[open]>summary{border-color:var(--navy)}
+.notes details[open]>summary .chev{transform:rotate(45deg)}
+.ngrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px}
+.ncol{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:4px;padding:12px 14px}
+.ncol h3{margin:0;color:var(--navy);font-size:1.02rem;letter-spacing:.06em;text-transform:uppercase}
+.nlead{margin:3px 0 8px;font-size:.92rem;color:var(--faint)}
+.ncol dl{margin:0}
+.ncol dt{font-weight:700;font-size:.95rem;color:var(--ink);margin-top:8px}
+.ncol dd{margin:2px 0 0;font-size:.93rem;color:var(--muted);line-height:1.4}
+.credits{margin-top:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:4px;display:grid;gap:3px;font-size:.95rem;color:var(--muted)}
+.credits p{margin:0}
+.credits b{color:var(--navy)}
+.credits a{color:var(--link);font-weight:700}
+@media (max-width:760px){.ngrid{grid-template-columns:1fr}}
+/* data access strip + form (same as the home page) */
+.ds{margin-top:22px;padding:14px 18px;background:var(--navy);color:#fff;border-radius:6px;border-bottom:2px solid var(--gold)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
+.ds-row p{margin:0;font-size:1.02rem;color:rgba(255,255,255,.8)}
+.ds-row b{color:#fff}
+.ds-btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;padding:8px 14px;border-radius:4px;border:1px solid var(--gold);background:var(--gold);color:var(--navy);font:700 .98rem var(--f);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--gold)}
+.btn:hover{filter:brightness(1.06)}
+#form-wrap{background:#fff;color:var(--ink);border-radius:4px;padding:2px 16px 16px;margin-top:14px}
+.fnote{font-size:.98rem;color:var(--muted);margin:14px 0 12px}
+.fnote a,.hintbox a,.chk a{color:var(--link);font-weight:700}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;font-weight:700;color:var(--navy)}
+.form .full{grid-column:1/-1}
+.form input,.form select,.form textarea{font:inherit;font-size:1rem;font-weight:400;color:var(--ink);padding:9px 11px;border:1px solid #d5d3cc;border-radius:4px;background:#fff;width:100%}
+.form textarea{min-height:96px;resize:vertical}
+.form input:focus,.form select:focus,.form textarea:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--navy)}
+.form .chk{flex-direction:row;align-items:flex-start;gap:8px;font-weight:400;color:var(--muted)}
+.form .chk input{width:auto;margin-top:3px}
+.send{justify-self:start;padding:11px 22px;border:0;border-bottom:2px solid var(--gold);border-radius:4px;background:var(--navy);color:#fff;font:700 1rem var(--f);cursor:pointer}
+.send:hover{background:var(--navy2)}
+.msg{font-size:.95rem;align-self:center}
+.hintbox{margin:0;padding:9px 12px;background:#fff8d6;border-radius:3px;font-size:.98rem}
+.hp{position:absolute;left:-9999px}
+@media (max-width:600px){.form{grid-template-columns:1fr}}
 @media (max-width:520px){.ev{grid-template-columns:40px 4px minmax(0,1fr);gap:0 10px;padding-right:12px}.date .d{font-size:1.2rem}.top,.filters{padding-left:14px;padding-right:14px}}
 </style>
 </head>
@@ -113,6 +181,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
       <div class="range" id="range"></div>
     </div>
     <div class="filters">
+      <p class="scope">European Parliament, national parliament and presidential elections in European states and territories, including by-elections; all regional elections; and local elections held nationwide or in the capital. <a href="#notes" id="notes-link">Why some elections aren't listed</a></p>
       <div class="controls" id="chips"></div>
       <div class="controls">
         <input id="q" type="search" placeholder="Filter by country or region…" aria-label="Filter by country or region">
@@ -120,8 +189,86 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
       <div class="legend" id="tags"></div>
     </div>
   </header>
+  <section class="mapcard" id="mapcard" aria-label="Map of upcoming elections">
+    <div class="maphead"><h2>Next twelve months</h2><span class="maphint" id="maphint">Colour = next election in each country · click a country to show only its elections</span></div>
+    <div class="mapwrap" id="mapwrap"><div class="maptip" id="maptip" hidden></div></div>
+    <div class="maplegend" id="maplegend"></div>
+  </section>
   <main id="out"></main>
   <footer id="foot"></footer>
+
+  <section class="notes" id="notes">
+    <details id="notes-box">
+      <summary><span class="chev" aria-hidden="true"></span>Why some elections aren't listed</summary>
+      <div class="ngrid">
+        <div class="ncol">
+          <h3>National level</h3>
+          <p class="nlead">How heads of state or government are chosen.</p>
+          <dl>
+            <dt>Hereditary heads of state</dt>
+            <dd>Belgium, Denmark, Liechtenstein, Luxembourg, Monaco, the Netherlands, Norway, Spain, Sweden and the United Kingdom are monarchies; the head of state is not elected.</dd>
+            <dt>Vatican City</dt>
+            <dd>An absolute monarchy. The Pope is chosen by a conclave after the death or resignation of his predecessor; no executive elections are held.</dd>
+            <dt>Andorra</dt>
+            <dd>The two co-princes are the Bishop of Urgell, appointed from the Vatican, and the President of France, elected in France's presidential election.</dd>
+            <dt>Postponed</dt>
+            <dd>Ukraine: elections are postponed because of Russia's ongoing invasion.</dd>
+          </dl>
+        </div>
+        <div class="ncol">
+          <h3>Regional level</h3>
+          <p class="nlead">Whether regional administrations exist and how they are chosen.</p>
+          <dl>
+            <dt>No regional level</dt>
+            <dd>Andorra, Armenia, Bulgaria, Estonia, Iceland, Ireland, Kosovo, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Montenegro, North Macedonia, San Marino, Slovenia, Türkiye and Vatican City.</dd>
+            <dt>Regional executives not directly elected</dt>
+            <dd>In parts or all of Albania, Austria, Azerbaijan, Belgium, Bosnia and Herzegovina, Czechia, Denmark, France, Georgia, Germany, Hungary, the Netherlands, Norway, Poland, Romania, Russia, Serbia, Spain, Sweden, Ukraine and the United Kingdom; also the Aosta Valley (Italy) and all regions of Moldova except Gagauzia.</dd>
+            <dt>No regional institutions</dt>
+            <dd>Cyprus has no regional parliaments; Finland has no regional executives.</dd>
+          </dl>
+        </div>
+        <div class="ncol">
+          <h3>Local level</h3>
+          <p class="nlead">Local elections are listed when they are held nationwide or include the capital.</p>
+          <dl>
+            <dt>Varying dates</dt>
+            <dd>Local (mayoral and council) election dates differ between subnational units in Armenia, Austria, Germany, Italy, Russia and the United Kingdom, so they are not listed.</dd>
+          </dl>
+        </div>
+      </div>
+    </details>
+    <div class="credits">
+      <p><b>Database managers:</b> Gert Armand Valgerist (Electoral Calendar Database Specialist) · Tobias Gerhard Schminke (Project Lead)</p>
+      <p>Found a mistake or a missing election? Write to <a href="mailto:contact@europeelects.eu" target="_top">contact@europeelects.eu</a>.</p>
+    </div>
+  </section>
+
+  <!-- Data access: strip with two paths; the enquiry form opens on demand -->
+  <section class="ds" id="data-access">
+    <div class="ds-row">
+      <p><b>Get the full data.</b> Every election in our calendar since 2017, with dates, rounds, election types and date status.</p>
+      <div class="ds-btns">
+        <a class="btn ghost" href="https://europeelects.eu/data/" target="_top">Academic access →</a>
+        <button type="button" class="btn" id="form-open" aria-expanded="false" aria-controls="form-wrap">Commercial &amp; bulk enquiries</button>
+      </div>
+    </div>
+    <div id="form-wrap" hidden>
+      <p class="fnote">For commercial use, bulk access or recurring deliveries. You can also write to <a href="mailto:contact@europeelects.eu" target="_top">contact@europeelects.eu</a>. Students and academic researchers: please follow the steps on our <a href="https://europeelects.eu/data/" target="_top">data page</a>.</p>
+      <form class="form" id="dform" novalidate>
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Organisation<input name="organisation" autocomplete="organization"></label>
+        <label>Type of use<select name="use"><option>Commercial</option><option>Media / journalism</option><option>Non-profit</option><option>Academic / student</option></select></label>
+        <p class="full hintbox" id="acad" hidden>Academic requests are handled through the processing fee. The steps are on our <a href="https://europeelects.eu/data/" target="_top">data page</a>; use this form only if you have a question.</p>
+        <label>Data needed<select name="dataset"><option>Electoral calendar</option><option>Election results</option><option>Polling data</option><option>Bulk access / recurring deliveries</option><option>Other data</option></select></label>
+        <label>Countries and time period<input name="scope" placeholder="e.g. all EU countries, 2017–today"></label>
+        <label class="full">What will you use the data for?<textarea name="purpose" required></textarea></label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="full chk"><input type="checkbox" name="consent" required> I agree that Europe Elects may use these details to answer my request (see the <a href="https://europeelects.eu/wpautoterms/gdpr-privacy-policy/" target="_top">privacy policy</a>).</label>
+        <button type="submit" class="send">Send enquiry</button><span class="msg" id="fmsg" role="status"></span>
+      </form>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -227,6 +374,8 @@ function render(){
   let list=inWin.filter(x=>!state.off.has(x.e.cat) && (!q||x.e.hay.includes(q)) && tagOk(x.e));
   const order={hos:0,nat:1,eu:2,ref:3,reg:4,loc:5};
   list.sort((x,y)=>x.anchor-y.anchor || order[x.e.cat]-order[y.e.cat] || x.e.c.localeCompare(y.e.c));
+  // Map: upcoming elections that pass the type and tag filters (the search box only filters the list).
+  mapUpdate(inWin.filter(x=>x.anchor>=t && !state.off.has(x.e.cat) && tagOk(x.e)).sort((x,y)=>x.anchor-y.anchor));
 
   const todayLine=`<div class="today">Today · ${fmt(t,{day:"numeric",month:"long"})}</div>`;
   const before=list.filter(x=>x.anchor<t), after=list.filter(x=>x.anchor>=t);
@@ -317,6 +466,89 @@ async function load(){
   }
   render();
 }
+// Data enquiry form: opens a pre-filled email to Europe Elects.
+/* ---------- Map of the next twelve months ---------- */
+// Calendar country names that are spelled differently in the map data (Natural Earth).
+const MAP_NAME = {"Bosnia and Herzegovina":"Bosnia and Herz.","North Macedonia":"Macedonia","Russian Federation":"Russia","Türkiye":"Turkey","Faroe Islands":"Faeroe Is.","Åland Islands":"Åland","Holy See":"Vatican","Svalbard":"Norway"};
+// Shown as dots (too small for the map, or missing from it).
+const SMALL = {"Vatican":[12.45,41.9],"Monaco":[7.42,43.74],"San Marino":[12.46,43.94],"Liechtenstein":[9.55,47.14],"Andorra":[1.52,42.55],"Malta":[14.44,35.9],"Luxembourg":[6.13,49.8],"Jersey":[-2.13,49.21],"Guernsey":[-2.58,49.46],"Isle of Man":[-4.53,54.23],"Åland":[19.95,60.2],"Faeroe Is.":[-6.9,62.0],"Gibraltar":[-5.35,36.14]};
+const M={ready:false,sel:null,by:new Map()};
+function loadScript(src){ return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=no; document.head.appendChild(s); }); }
+async function initMap(){
+  try{
+    if(!window.d3) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js");
+    if(!window.topojson) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js");
+    const world=await (await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json")).json();
+    const geos=world.objects.countries.geometries;
+    // Crimea is Ukraine (Natural Earth draws it as Russian); Northern Cyprus is drawn as part of Cyprus.
+    const move=(fromId,toId,point,fromName)=>{ const from=geos.find(g=>fromName?g.properties&&g.properties.name===fromName:String(g.id)===fromId), to=geos.find(g=>String(g.id)===toId); if(!from||!to) return;
+      let polys=from.type==="MultiPolygon"?from.arcs:[from.arcs], i=polys.findIndex(a=>d3.geoContains(topojson.feature(world,{type:"Polygon",arcs:a}),point));
+      if(i<0) return; const piece={type:"Polygon",arcs:polys[i]};
+      if(from.type==="MultiPolygon") from.arcs.splice(i,1); else { from.type=null; from.arcs=[]; }
+      const m=topojson.mergeArcs(world,[to,piece]); to.type=m.type; to.arcs=m.arcs; };
+    move("643","804",[34.1,45.3]); move(null,"196",[33.6,35.25],"N. Cyprus");
+    const feats=topojson.feature(world,{type:"GeometryCollection",geometries:geos.filter(g=>g.type)}).features;
+    const W=960,H=640;
+    const frame={type:"MultiPoint",coordinates:[[-24,35],[42,35],[-12,70],[38,70],[10,34]]};
+    const proj=d3.geoConicConformal().rotate([-12,0]).parallels([40,62]).fitExtent([[6,6],[W-6,H-6]],frame);
+    const path=d3.geoPath(proj);
+    const wrap=document.getElementById("mapwrap");
+    const svg=d3.select(wrap).append("svg").attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Map of Europe coloured by the next election in each country");
+    svg.append("rect").attr("width",W).attr("height",H).attr("fill","#eef3f7");
+    M.paths=svg.append("g").selectAll("path").data(feats.filter(f=>!SMALL[f.properties.name])).join("path").attr("d",path).attr("class","ct").attr("fill","#f1f0eb");
+    M.dots=svg.append("g").selectAll("circle").data(Object.entries(SMALL).map(([n,ll])=>({properties:{name:n},xy:proj(ll)}))).join("circle")
+      .attr("cx",d=>d.xy[0]).attr("cy",d=>d.xy[1]).attr("r",5.5).attr("class","dot").attr("fill","#d8d6cd");
+    const tip=document.getElementById("maptip");
+    const over=(ev,d)=>{ const ev2=M.by.get(d.properties.name); if(!ev2){tip.hidden=true;return;}
+      const r=wrap.getBoundingClientRect();
+      tip.innerHTML=`<b>${esc(ev2[0].e.c)}</b>`+ev2.slice(0,5).map(x=>{const c=CATS.find(c=>c.id===x.e.cat);
+        return `<div><i style="background:var(${c.k})"></i>${fmt(x.anchor,{day:"numeric",month:"short"})} · ${esc(typeLabel(x.e.t))}${x.e.p.every(p=>p.ok===0)?' <span class="more">(tbc)</span>':""}</div>`;}).join("")
+        +(ev2.length>5?`<div class="more">+${ev2.length-5} more</div>`:"")+`<div class="more">${M.sel===d.properties.name?"Click to show all countries":"Click to show only this country"}</div>`;
+      tip.hidden=false; let x=ev.clientX-r.left+14; if(x+290>r.width) x=ev.clientX-r.left-300; tip.style.left=Math.max(4,x)+"px"; tip.style.top=(ev.clientY-r.top+10)+"px"; };
+    const click=(ev,d)=>{ const ev2=M.by.get(d.properties.name); if(!ev2) return;
+      const name=ev2[0].e.c, same=M.sel===d.properties.name; M.sel=same?null:d.properties.name;
+      state.q=same?"":name; document.getElementById("q").value=state.q; render();
+      if(!same) document.getElementById("out").scrollIntoView({behavior:"smooth",block:"start"}); };
+    [M.paths,M.dots].forEach(sel=>sel.on("mousemove",over).on("mouseleave",()=>{tip.hidden=true;}).on("click",click));
+    M.ready=true; render();
+  }catch(err){ document.getElementById("mapcard").hidden=true; }
+}
+function mapUpdate(items){
+  const lg=document.getElementById("maplegend");
+  if(!M.ready){ return; }
+  M.by=new Map();
+  items.forEach(x=>{ const n=MAP_NAME[x.e.c]||x.e.c; if(!M.by.has(n)) M.by.set(n,[]); M.by.get(n).push(x); });
+  const col=n=>{ const l=M.by.get(n); if(!l) return null; const c=CATS.find(c=>c.id===l[0].e.cat); return getComputedStyle(document.documentElement).getPropertyValue(c.k).trim(); };
+  if(M.sel && !M.by.has(M.sel)) M.sel=null;
+  if(!state.q) M.sel=null;
+  const covered=new Set(DATA.map(e=>MAP_NAME[e.c]||e.c));
+  M.paths.attr("fill",d=>col(d.properties.name)||(covered.has(d.properties.name)?"#dddbd2":"#f3f2ee")).classed("on",d=>M.by.has(d.properties.name)).classed("sel",d=>M.sel===d.properties.name);
+  M.dots.attr("fill",d=>col(d.properties.name)||"#d8d6cd").classed("on",d=>M.by.has(d.properties.name)).classed("sel",d=>M.sel===d.properties.name)
+    .attr("display",d=>M.by.has(d.properties.name)?null:"none");
+  const used=new Set([...M.by.values()].map(l=>l[0].e.cat));
+  lg.innerHTML=CATS.filter(c=>used.has(c.id)).map(c=>`<span><i style="background:var(${c.k})"></i>${c.name}</span>`).join("")
+    +`<span><i style="background:#dddbd2"></i>No election in the next 12 months</span>`
+    +(M.sel?`<button type="button" class="clear" id="mapclear">Show all countries ✕</button>`:"");
+  const cl=document.getElementById("mapclear"); if(cl) cl.onclick=()=>{ M.sel=null; state.q=""; document.getElementById("q").value=""; render(); };
+}
+document.getElementById("notes-link").addEventListener("click",e=>{ e.preventDefault(); const d=document.getElementById("notes-box"); d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); });
+initMap();
+
+const DATA_EMAIL = "contact@europeelects.eu";
+(function(){
+  const f=document.getElementById("dform"), wrap=document.getElementById("form-wrap"), open=document.getElementById("form-open"), acad=document.getElementById("acad"), msg=document.getElementById("fmsg");
+  open.addEventListener("click",()=>{ wrap.hidden=!wrap.hidden; open.setAttribute("aria-expanded",!wrap.hidden); if(!wrap.hidden) f.name.focus(); });
+  f.use.addEventListener("change",()=>{ acad.hidden=!/academic/i.test(f.use.value); });
+  f.addEventListener("submit",e=>{
+    e.preventDefault(); if(f.website.value) return; if(!f.reportValidity()) return;
+    const d=Object.fromEntries(new FormData(f));
+    const body=`Name: ${d.name}\nEmail: ${d.email}\nOrganisation: ${d.organisation||"–"}\nType of use: ${d.use}\nData needed: ${d.dataset}\nCountries / period: ${d.scope||"–"}\n\nPurpose:\n${d.purpose}`;
+    const a=document.createElement("a"); a.target="_top";
+    a.href=`mailto:${DATA_EMAIL}?subject=${encodeURIComponent("Data enquiry ("+d.use+"): "+d.dataset)}&body=${encodeURIComponent(body)}`;
+    document.body.appendChild(a); a.click(); a.remove();
+    msg.textContent="Your email program should open with the enquiry.";
+  });
+})();
 // When embedded in an iframe: report the content height so the frame can resize.
 function postHeight(){ if(window.parent===window) return; const w=document.querySelector(".wrap"); window.parent.postMessage({"datawrapper-height":{"ee-calendar":Math.ceil(w.getBoundingClientRect().bottom+window.scrollY)}},"*"); }
 if("ResizeObserver" in window) new ResizeObserver(postHeight).observe(document.body);
