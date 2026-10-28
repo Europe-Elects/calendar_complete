@@ -26,23 +26,26 @@ body{color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.4;font-v
 
 /* header: navy bar with gold rule, filters in a white card below */
 header{margin-bottom:6px}
-.top{background:var(--navy);border-bottom:2px solid var(--gold);border-radius:6px 6px 0 0;padding:14px 18px 12px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 18px}
+.top{background:var(--navy);border-bottom:2px solid var(--gold);border-radius:6px;padding:11px 18px 9px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 18px}
 h1{margin:0;color:#fff;font-weight:700;font-size:clamp(1.25rem,3vw,1.6rem);letter-spacing:.08em;text-transform:uppercase;line-height:1.15;text-wrap:balance}
 .range{font-size:.95rem;color:rgba(255,255,255,.75)}
 .range b{color:var(--gold);font-weight:700}
-.hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px}
-.filters{padding:14px 18px;display:grid;gap:12px;align-content:start}
+/* two columns: filters + list on the left, map on the right (top) */
+.cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:18px;align-items:start;margin-top:12px}
+.colL{min-width:0}
+.colR{min-width:0}
+.filters{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:11px 14px;display:grid;gap:9px}
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.chip{display:inline-flex;align-items:center;gap:7px;min-height:36px;border:1px solid #D5D3CC;background:var(--surface);color:var(--ink);border-radius:999px;padding:0 13px 0 11px;font:600 .95rem var(--f);cursor:pointer}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:30px;border:1px solid #D5D3CC;background:var(--surface);color:var(--ink);border-radius:999px;padding:0 11px 0 9px;font:600 .9rem var(--f);cursor:pointer}
 .chip i{width:10px;height:10px;border-radius:50%;background:var(--k)}
 .chip .n{color:var(--faint);font-weight:500}
 .chip:hover{border-color:var(--navy)}
 .chip[aria-pressed="false"]{opacity:.5}
 .chip[aria-pressed="false"] i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--k)}
 .chip:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-#q{flex:1 1 220px;min-width:0;border:1px solid #D5D3CC;background:var(--surface);color:var(--ink);border-radius:4px;padding:9px 12px;font:inherit;font-size:1rem}
+#q{flex:1 1 220px;min-width:0;border:1px solid #D5D3CC;background:var(--surface);color:var(--ink);border-radius:4px;padding:6px 11px;font:inherit;font-size:.98rem}
 #q:focus{border-color:var(--navy)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.92rem;color:var(--muted);align-items:center}
+.legend{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:.88rem;color:var(--muted);align-items:center}
 .tf{display:inline-flex;gap:6px;align-items:center;background:none;border:1px solid transparent;border-radius:4px;padding:3px 7px 3px 3px;font:inherit;color:inherit;cursor:pointer}
 .tf:hover{border-color:var(--line)}
 .tf .st{font:700 .7rem var(--f);text-transform:uppercase;letter-spacing:.06em;border-radius:3px;padding:1px 5px;display:none}
@@ -54,10 +57,10 @@ h1{margin:0;color:#fff;font-weight:700;font-size:clamp(1.25rem,3vw,1.6rem);lette
 .tf .n{color:var(--faint);font-size:.85rem}
 .tf:focus-visible,.tag[data-t]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .tag[data-t]{cursor:pointer}
-.hint{font-size:.85rem;color:var(--faint)}
+.hint{display:none}
 
 /* months */
-.month{margin-top:26px}
+.month{margin-top:22px}
 .month h2{margin:0 0 10px;padding-bottom:7px;border-bottom:2px solid var(--gold);display:flex;align-items:baseline;gap:10px;color:var(--navy);font-weight:700;font-size:1.1rem;letter-spacing:.07em;text-transform:uppercase}
 .month h2 small{font-size:.85rem;color:var(--faint);font-weight:500;letter-spacing:0;text-transform:none}
 .list{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
@@ -88,10 +91,10 @@ h1{margin:0;color:#fff;font-weight:700;font-size:clamp(1.25rem,3vw,1.6rem);lette
 .parts{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:.92rem;color:var(--muted)}
 .parts .p.done{text-decoration:line-through;text-decoration-color:var(--faint)}
 sup.tbc{font:700 .66rem var(--f);color:var(--today);margin-left:2px;letter-spacing:.03em;text-transform:uppercase}
-.today{display:flex;align-items:center;gap:10px;margin:28px 0 -10px;color:var(--today);font:700 .9rem var(--f);text-transform:uppercase;letter-spacing:.08em}
+.today{display:flex;align-items:center;gap:10px;margin:16px 0 -14px;color:var(--today);font:700 .9rem var(--f);text-transform:uppercase;letter-spacing:.08em}
 .today::after{content:"";flex:1;height:2px;background:var(--today);border-radius:1px}
-.pastbox{margin-top:16px}
-.pastbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;color:var(--navy);font:700 1rem var(--f);letter-spacing:.04em}
+.pastbox{margin-top:12px}
+.pastbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--surface);border:1px solid var(--line);border-radius:6px;color:var(--navy);font:700 1rem var(--f);letter-spacing:.04em}
 .pastbox>summary::-webkit-details-marker{display:none}
 .pastbox>summary:hover{border-color:var(--navy)}
 .pastbox .n{font-size:.88rem;color:var(--faint);font-weight:500;margin-left:auto;letter-spacing:0}
@@ -102,10 +105,10 @@ sup.tbc{font:700 .66rem var(--f);color:var(--today);margin-left:2px;letter-spaci
 .empty{padding:28px;text-align:center;color:var(--muted)}
 footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-size:.9rem;color:var(--faint)}
 /* scope line */
-.scope{margin:0;font-size:.98rem;color:var(--muted);line-height:1.45}
+.scope{margin:0;font-size:.92rem;color:var(--muted);line-height:1.45}
 .scope a{color:var(--link);font-weight:700;white-space:nowrap}
 /* map */
-.mapcard{border-left:1px solid var(--line);padding:10px 16px 12px;min-width:0}
+.mapcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px 10px}
 .maphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:6px;border-bottom:2px solid var(--gold);margin-bottom:6px}
 .maphead h2{margin:0;color:var(--navy);font-size:1rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
 .maptoggle{display:none;border:1px solid #D5D3CC;background:#fff;border-radius:999px;padding:4px 12px;font:700 .9rem var(--f);color:var(--navy);cursor:pointer}
@@ -145,8 +148,8 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 .credits a{color:var(--link);font-weight:700}
 @media (max-width:760px){.ngrid{grid-template-columns:1fr}}
 @media (max-width:860px){
-  .hgrid{grid-template-columns:1fr}
-  .mapcard{border-left:0;border-top:1px solid var(--line)}
+  .cols{grid-template-columns:1fr;gap:0}
+  .colR{order:-1;margin-bottom:10px}
   .maptoggle{display:inline-block}
   .mapcard:not(.open) .mapbody{display:none}
   .mapcard:not(.open) .maphead{border-bottom:0;margin-bottom:0;padding-bottom:0}
@@ -189,27 +192,31 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
       <h1>Electoral Calendar</h1>
       <div class="range" id="range"></div>
     </div>
-    <div class="hgrid">
-    <div class="filters">
-      <p class="scope">European Parliament, national parliament and presidential elections in European states and territories, including by-elections; all regional elections; and local elections held nationwide or in the capital. <a href="#notes" id="notes-link">Why some elections aren't listed</a></p>
-      <div class="controls" id="chips"></div>
-      <div class="controls">
-        <input id="q" type="search" placeholder="Filter by country or region…" aria-label="Filter by country or region">
-      </div>
-      <div class="legend" id="tags"></div>
-    </div>
-    <section class="mapcard" id="mapcard" aria-label="Map of upcoming elections">
-      <div class="maphead"><h2>Next 12 months</h2><button type="button" class="maptoggle" id="maptoggle" aria-expanded="false">Show map</button></div>
-      <div class="mapbody" id="mapbody">
-        <div class="mapwrap" id="mapwrap"><div class="maptip" id="maptip" hidden></div></div>
-        <div class="maplegend" id="maplegend"></div>
-        <p class="maphint">Colour = next election · click a country to filter the list</p>
-      </div>
-    </section>
-    </div>
   </header>
-  <main id="out"></main>
-  <footer id="foot"></footer>
+  <div class="cols">
+    <div class="colL">
+      <div class="filters">
+        <p class="scope">EP, national parliament and presidential elections (incl. by-elections), all regional elections, and local elections held nationwide or in the capital. <a href="#notes" id="notes-link">What's not listed</a></p>
+        <div class="controls" id="chips"></div>
+        <div class="controls">
+          <input id="q" type="search" placeholder="Filter by country or region…" aria-label="Filter by country or region">
+        </div>
+        <div class="legend" id="tags"></div>
+      </div>
+      <main id="out"></main>
+      <footer id="foot"></footer>
+    </div>
+    <aside class="colR">
+      <section class="mapcard" id="mapcard" aria-label="Map of upcoming elections">
+        <div class="maphead"><h2>Next 12 months</h2><button type="button" class="maptoggle" id="maptoggle" aria-expanded="false">Show map</button></div>
+        <div class="mapbody" id="mapbody">
+          <div class="mapwrap" id="mapwrap"><div class="maptip" id="maptip" hidden></div></div>
+          <div class="maplegend" id="maplegend"></div>
+          <p class="maphint">Colour = election types in the next 12 months; stripes = several types · click a country to filter the list</p>
+        </div>
+      </section>
+    </aside>
+  </div>
 
   <section class="notes" id="notes">
     <details id="notes-box">
@@ -502,14 +509,15 @@ async function initMap(){
       const m=topojson.mergeArcs(world,[to,piece]); to.type=m.type; to.arcs=m.arcs; };
     move("643","804",[34.1,45.3]); move(null,"196",[33.6,35.25],"N. Cyprus");
     const feats=topojson.feature(world,{type:"GeometryCollection",geometries:geos.filter(g=>g.type)}).features;
-    const W=960,H=700;
+    const W=960,H=760;
     // Frame: mainland Europe from Portugal to the Black Sea, Crete to North Cape, plus Iceland (sampled edges, because parallels curve).
     const edge=[]; for(let lon=-10;lon<=36;lon+=2){ edge.push([lon,34.8],[lon,lon<5?60:70.5]); } for(let lat=35;lat<=60;lat+=5) edge.push([-10,lat]);
     const frame={type:"MultiPoint",coordinates:edge.concat([[-24.5,63.3],[-24.5,66.6],[-13.5,66.6],[-13.5,63.3]])};
     const proj=d3.geoConicConformal().rotate([-12,0]).parallels([40,62]).fitExtent([[6,6],[W-6,H-6]],frame);
     const path=d3.geoPath(proj);
     const wrap=document.getElementById("mapwrap");
-    const svg=d3.select(wrap).append("svg").attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Map of Europe coloured by the next election in each country");
+    const svg=d3.select(wrap).append("svg").attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Map of Europe coloured by the types of election in each country in the next 12 months");
+    M.defs=svg.append("defs"); M.pat={};
     svg.append("rect").attr("width",W).attr("height",H).attr("fill","#eef3f7");
     M.paths=svg.append("g").selectAll("path").data(feats.filter(f=>!SMALL[f.properties.name])).join("path").attr("d",path).attr("class","ct").attr("fill","#f1f0eb");
     M.dots=svg.append("g").selectAll("circle").data(Object.entries(SMALL).map(([n,ll])=>({properties:{name:n},xy:proj(ll)}))).join("circle")
@@ -534,15 +542,24 @@ function mapUpdate(items){
   if(!M.ready){ return; }
   M.by=new Map();
   items.forEach(x=>{ const n=MAP_NAME[x.e.c]||x.e.c; if(!M.by.has(n)) M.by.set(n,[]); M.by.get(n).push(x); });
-  const col=n=>{ const l=M.by.get(n); if(!l) return null; const c=CATS.find(c=>c.id===l[0].e.cat); return getComputedStyle(document.documentElement).getPropertyValue(c.k).trim(); };
+  // One election type: solid colour. Several types in the next 12 months: diagonal stripes of each type's colour.
+  const cssVar=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+  const col=n=>{ const l=M.by.get(n); if(!l) return null;
+    const cats=CATS.filter(c=>l.some(x=>x.e.cat===c.id));
+    if(cats.length===1) return cssVar(cats[0].k);
+    const id="st-"+cats.map(c=>c.id).join("-");
+    if(!M.pat[id]){ const w=7, pat=M.defs.append("pattern").attr("id",id).attr("patternUnits","userSpaceOnUse").attr("width",w*cats.length).attr("height",w).attr("patternTransform","rotate(45)");
+      cats.forEach((c,i)=>pat.append("rect").attr("x",i*w).attr("y",0).attr("width",w).attr("height",w).attr("fill",cssVar(c.k))); M.pat[id]=`url(#${id})`; }
+    return M.pat[id]; };
   if(M.sel && !M.by.has(M.sel)) M.sel=null;
   if(!state.q) M.sel=null;
   const covered=new Set(DATA.map(e=>MAP_NAME[e.c]||e.c));
   M.paths.attr("fill",d=>col(d.properties.name)||(covered.has(d.properties.name)?"#dddbd2":"#f3f2ee")).classed("on",d=>M.by.has(d.properties.name)).classed("sel",d=>M.sel===d.properties.name);
   M.dots.attr("fill",d=>col(d.properties.name)||"#d8d6cd").classed("on",d=>M.by.has(d.properties.name)).classed("sel",d=>M.sel===d.properties.name)
     .attr("display",d=>M.by.has(d.properties.name)?null:"none");
-  const used=new Set([...M.by.values()].map(l=>l[0].e.cat));
+  const used=new Set([...M.by.values()].flatMap(l=>l.map(x=>x.e.cat)));
   lg.innerHTML=CATS.filter(c=>used.has(c.id)).map(c=>`<span><i style="background:var(${c.k})"></i>${c.name}</span>`).join("")
+    +`<span><i style="background:repeating-linear-gradient(45deg,var(--c-nat) 0 3px,var(--c-reg) 3px 6px)"></i>Several types</span>`
     +`<span><i style="background:#dddbd2"></i>No election in the next 12 months</span>`
     +(M.sel?`<button type="button" class="clear" id="mapclear">Show all countries ✕</button>`:"");
   const cl=document.getElementById("mapclear"); if(cl) cl.onclick=()=>{ M.sel=null; state.q=""; document.getElementById("q").value=""; render(); };
